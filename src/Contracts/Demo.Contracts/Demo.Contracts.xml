@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Demo.Contracts</name>
+    </assembly>
+    <members>
+        <member name="T:Demo.Contracts.Aircraft.AircraftDto">
+            <summary>
+            Информация о ВС.
+            </summary>
+        </member>
+        <member name="P:Demo.Contracts.Aircraft.AircraftDto.AircraftCode">
+            <summary>
+            Код ВС.
+            </summary>
+        </member>
+        <member name="P:Demo.Contracts.Aircraft.AircraftDto.AircraftModelInfo">
+            <summary>
+            Информация о ВС.
+            </summary>
+        </member>
+        <member name="P:Demo.Contracts.Aircraft.AircraftDto.Seats">
+            <summary>
+            Информация о посадочных местах.
+            </summary>
+        </member>
+        <member name="T:Demo.Contracts.Aircraft.SeatDto">
+            <summary>
+            Информация о посадочном месте.
+            </summary>
+        </member>
+        <member name="P:Demo.Contracts.Aircraft.SeatDto.No">
+            <summary>
+            Номер.
+            </summary>
+        </member>
+        <member name="P:Demo.Contracts.Aircraft.SeatDto.Fare">
+            <summary>
+            Тариф.
+            </summary>
+        </member>
+        <member name="T:Demo.Contracts.Flight.FlightDto">
+            <summary>
+            Информация о рейсе.
+            </summary>
+        </member>
+        <member name="P:Demo.Contracts.Flight.FlightDto.FlightId">
+            <summary>
+            Идентификатор рейса.
+            </summary>
+        </member>
+        <member name="P:Demo.Contracts.Flight.FlightDto.FlightNo">
+            <summary>
+            Номер рейса.
+            </summary>
+        </member>
+        <member name="P:Demo.Contracts.Flight.FlightDto.TicketFlights">
+            <summary>
+            Краткая информация о перелётах.
+            </summary>
+        </member>
+        <member name="T:Demo.Contracts.Flight.FlightFilterRequest">
+            <summary>
+            Параметры поиска рейсов.
+            </summary>
+        </member>
+        <member name="P:Demo.Contracts.Flight.FlightFilterRequest.AircraftCode">
+            <summary>
+            Код ВС.
+            </summary>
+        </member>
+        <member name="P:Demo.Contracts.Flight.FlightFilterRequest.FlightNo">
+            <summary>
+            Номер рейса.
+            </summary>
+        </member>
+        <member name="T:Demo.Contracts.TicketFlight.TicketFlightDto">
+            <summary>
+            Информация о перелёте.
+            </summary>
+        </member>
+        <member name="P:Demo.Contracts.TicketFlight.TicketFlightDto.TicketNo">
+            <summary>
+            Номер билета.
+            </summary>
+        </member>
+        <member name="P:Demo.Contracts.TicketFlight.TicketFlightDto.FlightNo">
+            <summary>
+            Номер рейса.
+            </summary>
+        </member>
+        <member name="P:Demo.Contracts.TicketFlight.TicketFlightDto.PassengerName">
+            <summary>
+            Имя пассажира.
+            </summary>
+        </member>
+        <member name="T:Demo.Contracts.TicketFlight.TicketFlightFilterRequest">
+            <summary>
+            Параметры поиска перелётов.
+            </summary>
+        </member>
+        <member name="P:Demo.Contracts.TicketFlight.TicketFlightFilterRequest.FlightId">
+            <summary>
+            Идентификатор рейса.
+            </summary>
+        </member>
+        <member name="P:Demo.Contracts.TicketFlight.TicketFlightFilterRequest.Fare">
+            <summary>
+            Тариф.
+            </summary>
+        </member>
+        <member name="P:Demo.Contracts.TicketFlight.TicketFlightFilterRequest.TicketNo">
+            <summary>
+            Номер билета.
+            </summary>
+        </member>
+        <member name="T:Demo.Contracts.TicketFlight.TicketFlightShortDto">
+            <summary>
+            Краткая информация о перелёте.
+            </summary>
+        </member>
+        <member name="P:Demo.Contracts.TicketFlight.TicketFlightShortDto.TicketNo">
+            <summary>
+            Номер билета.
+            </summary>
+        </member>
+        <member name="P:Demo.Contracts.TicketFlight.TicketFlightShortDto.Fare">
+            <summary>
+            Тариф.
+            </summary>
+        </member>
+    </members>
+</doc>

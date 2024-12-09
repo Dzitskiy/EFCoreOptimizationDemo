@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Demo.Hosts.Api</name>
+    </assembly>
+    <members>
+        <member name="T:Demo.Hosts.Api.Controllers.AircraftController">
+            <summary>
+            Контроллер для работы с ВС.
+            </summary>
+        </member>
+        <member name="M:Demo.Hosts.Api.Controllers.AircraftController.#ctor(Demo.Application.AppServices.Contexts.Aircraft.Services.IAircraftService)">
+            <summary>
+            c-tor <see cref="T:Demo.Hosts.Api.Controllers.AircraftController"/>
+            </summary>
+        </member>
+        <member name="M:Demo.Hosts.Api.Controllers.AircraftController.GetFlightTicketIdAsync(System.String,System.Boolean,System.Threading.CancellationToken)">
+            <summary>
+            Получить информацию о ВС.
+            </summary>
+            <param name="aircraftCode">Код ВС.</param>
+            <param name="useSplitQuery">Использовать деление запросов в БД.</param>
+            <param name="cancellationToken">Токен отмены.</param>
+            <returns>Модель ВС <see cref="T:Demo.Contracts.Aircraft.AircraftDto"/></returns>
+        </member>
+        <member name="T:Demo.Hosts.Api.Controllers.FlightController">
+            <summary>
+            Контроллер для работы с рейсами.
+            </summary>
+        </member>
+        <member name="M:Demo.Hosts.Api.Controllers.FlightController.#ctor(Demo.Application.AppServices.Contexts.Flight.Services.IFlightService,Demo.Application.AppServices.Contexts.TicketFlight.Services.ITicketFlightService)">
+            <summary>
+            c-tor <see cref="T:Demo.Hosts.Api.Controllers.FlightController"/>
+            </summary>
+        </member>
+        <member name="M:Demo.Hosts.Api.Controllers.FlightController.GetByIdAsync(System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Получить информацию о перелёте по номеру билета.
+            </summary>
+            <param name="flightId">Идетификатор рейса.</param>
+            <param name="cancellationToken">Токен отмены.</param>
+            <returns>Модели перелётов <see cref="T:Demo.Contracts.TicketFlight.TicketFlightDto"/></returns>
+        </member>
+        <member name="M:Demo.Hosts.Api.Controllers.FlightController.SearchAsync(Demo.Contracts.Flight.FlightFilterRequest,System.Threading.CancellationToken,System.Int32,System.Int32)">
+            <summary>
+            Выполнить поиск рейсов.
+            </summary>
+            <param name="filterRequest">Параметры поиска.</param>
+            <param name="cancellationToken">Отмена операции.</param>
+            <param name="pageSize">Размер страницы.</param>
+            <param name="pageIndex">Номер страницы.</param>
+            <returns>Коллекция перелётов <see cref="T:Demo.Contracts.Flight.FlightDto"/></returns>
+        </member>
+        <member name="T:Demo.Hosts.Api.Controllers.TicketController">
+            <summary>
+            Контроллер для работы с билетами.
+            </summary>
+        </member>
+        <member name="M:Demo.Hosts.Api.Controllers.TicketController.#ctor(Demo.Application.AppServices.Contexts.TicketFlight.Services.ITicketFlightService)">
+            <summary>
+            c-tor <see cref="T:Demo.Hosts.Api.Controllers.TicketFlightController"/>
+            </summary>
+            <param name="ticketFlightService">Сервис работы с перелётами.</param>
+        </member>
+        <member name="M:Demo.Hosts.Api.Controllers.TicketController.GetTicketFlightsAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Получить информацию о перелётах по номеру билета.
+            </summary>
+            <param name="no">Номер билета.</param>
+            <param name="cancellationToken">Токен отмены.</param>
+            <returns>Список перелётов <see cref="T:Demo.Contracts.TicketFlight.TicketFlightDto"/></returns>
+        </member>
+        <member name="T:Demo.Hosts.Api.Controllers.TicketFlightController">
+            <summary>
+            Контроллер для работы с перелётами.
+            </summary>
+        </member>
+        <member name="M:Demo.Hosts.Api.Controllers.TicketFlightController.#ctor(Demo.Application.AppServices.Contexts.TicketFlight.Services.ITicketFlightService)">
+            <summary>
+            c-tor <see cref="T:Demo.Hosts.Api.Controllers.TicketFlightController"/>
+            </summary>
+            <param name="ticketFlightService">Сервис работы с перелётами.</param>
+        </member>
+        <member name="M:Demo.Hosts.Api.Controllers.TicketFlightController.GetAllAsync(System.Threading.CancellationToken,System.Int32,System.Int32)">
+            <summary>
+            TODO
+            Получить список.
+            </summary>
+            <param name="cancellationToken">Отмена операции.</param>
+            <param name="pageSize">Размер страницы.</param>
+            <param name="pageIndex">Номер страницы.</param>
+            <returns>Коллекция объявлений <see cref="T:Demo.Contracts.TicketFlight.TicketFlightDto"/></returns>
+        </member>
+        <member name="M:Demo.Hosts.Api.Controllers.TicketFlightController.SearchAsync(Demo.Contracts.TicketFlight.TicketFlightFilterRequest,System.Threading.CancellationToken,System.Int32,System.Int32)">
+            <summary>
+            Выполнить поиск перелётов.
+            </summary>
+            <param name="filterRequest">Параметры поиска.</param>
+            <param name="cancellationToken">Отмена операции.</param>
+            <param name="pageSize">Размер страницы.</param>
+            <param name="pageIndex">Номер страницы.</param>
+            <returns>Коллекция перелётов <see cref="T:Demo.Contracts.TicketFlight.TicketFlightDto"/></returns>
+        </member>
+    </members>
+</doc>
