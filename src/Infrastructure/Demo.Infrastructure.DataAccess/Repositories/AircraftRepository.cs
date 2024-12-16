@@ -26,7 +26,19 @@ public class AircraftRepository : IAircraftRepository
 
         if (useSplitQuery)
         {
-            query = query.AsSplitQuery();
+            return query
+                .AsSplitQuery()
+                .Select(x => new AircraftDto
+                {
+                    AircraftCode = x.AircraftCode,
+                    AircraftModelInfo = x.Model,
+                    Seats = x.Seats.Select(s => new SeatDto
+                    {
+                        No = s.SeatNo,
+                        Fare = s.FareConditions
+                    }).ToArray()
+                })
+                .FirstOrDefaultAsync(cancellationToken);
         }
 
         return query
@@ -41,5 +53,27 @@ public class AircraftRepository : IAircraftRepository
                 }).ToArray()
             })
             .FirstOrDefaultAsync(cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public Task<SeatDto[]> GetAircraftSeatsInfoAsync(string aircraftCode, CancellationToken cancellationToken)
+    {
+        var query = _dbContext.Seats.Where(x => x.AircraftCode == aircraftCode)
+            .TagWith($"Query Aircraft Seats for AircraftCode={aircraftCode}");
+
+        return query
+            .Select(s => new SeatDto { No = s.SeatNo, Fare = s.FareConditions })
+            .ToArrayAsync(cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public Task<SeatDto[]> GetCn1SeatsInfoAsync(CancellationToken cancellationToken)
+    {
+        var query = _dbContext.Seats.Where(x => x.AircraftCode == "CN1")
+            .TagWith("Query Aircraft Seats for CN1");
+
+        return query
+            .Select(s => new SeatDto { No = s.SeatNo, Fare = s.FareConditions })
+            .ToArrayAsync(cancellationToken);
     }
 }

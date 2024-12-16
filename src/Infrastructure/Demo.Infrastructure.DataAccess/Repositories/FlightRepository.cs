@@ -1,4 +1,5 @@
-﻿using Demo.Application.AppServices.Contexts.Flight.Repositories;
+﻿using System.Linq.Expressions;
+using Demo.Application.AppServices.Contexts.Flight.Repositories;
 using Demo.Application.AppServices.Specifications;
 using Demo.Contracts.Flight;
 using Demo.Contracts.TicketFlight;
@@ -19,30 +20,22 @@ public class FlightRepository : IFlightRepository
     {
         _dbContext = dbContext;
     }
-
+    
     /// <inheritdoc/>
-    public Task<FlightDto[]> SearchAsync(ISpecification<Flight> specification, CancellationToken cancellationToken)
+    public async Task<FlightDto[]> SearchAsync(ISpecification<Flight> specification,
+        int skip, int take, CancellationToken cancellationToken)
     {
-        // AsSplitQuery работает
-        // return _dbContext.Flights.Where(specification.PredicateExpression)
-        //     .AsSplitQuery()
-        //     .Select(x => new FlightDto
-        //     {
-        //         FlightNo = x.FlightNo,
-        //         FlightId = x.FlightId,
-        //         TicketFlights = x.TicketFlights.Select(t => new TicketFlightShortDto
-        //         {
-        //             // FlightNo = x.FlightNo, // todo нужен?
-        //             TicketNo = t.TicketNo,
-        //             Fare = t.FareConditions
-        //         }).ToArray()
-        //     })
-        //     .Take(100)
-        //     .ToArrayAsync(cancellationToken);
+        // TODO сделать 2 варианта: поиск сразу и поиск сначала Ids, потом выборка
 
+        // NOTE поиск по Id, затем выборка по Id
+        var ids = await _dbContext.Flights.Where(specification.PredicateExpression)
+            .TagWith("Поиск идентификаторов рейсов по фильтру.")
+            .OrderBy(x => x.FlightId)
+            .Skip(skip).Take(take)
+            .Select(x => x.FlightId).ToArrayAsync(cancellationToken);
 
-        return _dbContext.Flights.Where(specification.PredicateExpression)
-            .AsSplitQuery()
+        return await _dbContext.Flights.Where(x => ids.Contains(x.FlightId))
+            .TagWith("Выборка рейсов по идентификаторам.")
             .Select(x => new FlightDto
             {
                 FlightNo = x.FlightNo,
@@ -53,7 +46,29 @@ public class FlightRepository : IFlightRepository
                     Fare = t.FareConditions
                 }).ToArray()
             })
-            .Take(100)
             .ToArrayAsync(cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public Task<FlightRouteDto[]> GetFlightRoutesAsync(string flightNo, CancellationToken cancellationToken)
+    {
+        // NOTE покрывающий индекс
+        // NOTE CREATE INDEX flights_flight_no_route ON bookings.flights USING btree (flight_no) include (departure_airport, scheduled_departure, arrival_airport);
+        return _dbContext.Flights.Where(x => x.FlightNo == flightNo)
+            .Select(x => new FlightRouteDto
+            {
+                FlightNo = x.FlightNo,
+                ScheduledDeparture = x.ScheduledDeparture.ToString("dd-MM-yyyy HH:mm"),
+                DepartureAirport = x.DepartureAirport,
+                ArrivalAirport = x.ArrivalAirport
+            })
+            .ToArrayAsync(cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public Task<int> GetCountAsync(Expression<Func<Flight, bool>> expression,
+        CancellationToken cancellationToken)
+    {
+        return _dbContext.Flights.CountAsync(expression, cancellationToken);
     }
 }

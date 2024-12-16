@@ -14,14 +14,32 @@
             c-tor <see cref="T:Demo.Hosts.Api.Controllers.AircraftController"/>
             </summary>
         </member>
-        <member name="M:Demo.Hosts.Api.Controllers.AircraftController.GetFlightTicketIdAsync(System.String,System.Boolean,System.Threading.CancellationToken)">
+        <member name="M:Demo.Hosts.Api.Controllers.AircraftController.GetAircraftInfoAsync(System.String,System.Boolean,System.Threading.CancellationToken)">
             <summary>
             Получить информацию о ВС.
             </summary>
+            <remarks>NOTE пример AsSplitQuery</remarks>
             <param name="aircraftCode">Код ВС.</param>
             <param name="useSplitQuery">Использовать деление запросов в БД.</param>
             <param name="cancellationToken">Токен отмены.</param>
             <returns>Модель ВС <see cref="T:Demo.Contracts.Aircraft.AircraftDto"/></returns>
+        </member>
+        <member name="M:Demo.Hosts.Api.Controllers.AircraftController.GetAircraftSeatsInfoAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Получить информацию о посадочных местах ВС.
+            </summary>
+            <remarks>NOTE пример параметризированных запросов</remarks>
+            <param name="aircraftCode">Код ВС.</param>
+            <param name="cancellationToken">Токен отмены.</param>
+            <returns>Список моделей посадочных мест ВС <see cref="T:Demo.Contracts.Aircraft.SeatDto"/></returns>
+        </member>
+        <member name="M:Demo.Hosts.Api.Controllers.AircraftController.GetCessnaSeatsInfoAsync(System.Threading.CancellationToken)">
+            <summary>
+            Получить информацию о посадочных местах Cessna 208.
+            </summary>
+            <remarks>NOTE пример параметризированных запросов</remarks>
+            <param name="cancellationToken">Токен отмены.</param>
+            <returns>Список моделей посадочных мест ВС <see cref="T:Demo.Contracts.Aircraft.SeatDto"/></returns>
         </member>
         <member name="T:Demo.Hosts.Api.Controllers.FlightController">
             <summary>
@@ -33,22 +51,45 @@
             c-tor <see cref="T:Demo.Hosts.Api.Controllers.FlightController"/>
             </summary>
         </member>
-        <member name="M:Demo.Hosts.Api.Controllers.FlightController.GetByIdAsync(System.Int32,System.Threading.CancellationToken)">
+        <member name="M:Demo.Hosts.Api.Controllers.FlightController.GetAsync(System.Int32,System.Threading.CancellationToken)">
             <summary>
-            Получить информацию о перелёте по номеру билета.
+            Получить информацию о перелётах по номеру рейса.
             </summary>
+            <remarks>NOTE пример добавления индекса для поиска (ticket-flights.flight_id)</remarks>
             <param name="flightId">Идетификатор рейса.</param>
             <param name="cancellationToken">Токен отмены.</param>
             <returns>Модели перелётов <see cref="T:Demo.Contracts.TicketFlight.TicketFlightDto"/></returns>
         </member>
-        <member name="M:Demo.Hosts.Api.Controllers.FlightController.SearchAsync(Demo.Contracts.Flight.FlightFilterRequest,System.Threading.CancellationToken,System.Int32,System.Int32)">
+        <member name="M:Demo.Hosts.Api.Controllers.FlightController.GetShortInfoAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Получить краткую информацию о запланированных рейсах.
+            </summary>
+            <remarks>NOTE пример для Scan _ONLY_ Index (покрывающий индекс)</remarks>
+            <param name="flightNo">Номер рейса.</param>
+            <param name="cancellationToken">Токен отмены.</param>
+            <returns>Список кратких моделей рейса <see cref="T:Demo.Contracts.Flight.FlightRouteDto"/></returns>
+        </member>
+        <member name="M:Demo.Hosts.Api.Controllers.FlightController.BadSearchAsync(Demo.Contracts.Flight.FlightFilterRequest,System.Threading.CancellationToken)">
             <summary>
             Выполнить поиск рейсов.
             </summary>
+            <remarks>NOTE пример плохо спроектированного API</remarks>
             <param name="filterRequest">Параметры поиска.</param>
             <param name="cancellationToken">Отмена операции.</param>
-            <param name="pageSize">Размер страницы.</param>
-            <param name="pageIndex">Номер страницы.</param>
+            <returns>Коллекция перелётов <see cref="T:Demo.Contracts.Flight.FlightDto"/></returns>
+        </member>
+        <member name="M:Demo.Hosts.Api.Controllers.FlightController.SearchAsync(Demo.Contracts.Flight.FlightFilterRequest,Demo.Contracts.Pagination.PageRequest,System.Threading.CancellationToken)">
+            <summary>
+            Выполнить поиск рейсов.
+            </summary>
+            <remarks>
+            NOTE пример пагинации, спецификации
+            NOTE пример важности порядка полей в индексе: flights -> ticket_flights (ticket_no, flight_id)
+            NOTE поиск сразу и поиск сначала Ids, потом выборка
+            </remarks>
+            <param name="filterRequest">Параметры поиска.</param>
+            <param name="pageRequest">Информация о пагинации.</param>
+            <param name="cancellationToken">Отмена операции.</param>
             <returns>Коллекция перелётов <see cref="T:Demo.Contracts.Flight.FlightDto"/></returns>
         </member>
         <member name="T:Demo.Hosts.Api.Controllers.TicketController">
@@ -56,16 +97,25 @@
             Контроллер для работы с билетами.
             </summary>
         </member>
-        <member name="M:Demo.Hosts.Api.Controllers.TicketController.#ctor(Demo.Application.AppServices.Contexts.TicketFlight.Services.ITicketFlightService)">
+        <member name="M:Demo.Hosts.Api.Controllers.TicketController.#ctor(Demo.Application.AppServices.Contexts.TicketFlight.Services.ITicketFlightService,Demo.Application.AppServices.Contexts.Ticket.Services.ITicketService)">
             <summary>
             c-tor <see cref="T:Demo.Hosts.Api.Controllers.TicketFlightController"/>
             </summary>
-            <param name="ticketFlightService">Сервис работы с перелётами.</param>
+        </member>
+        <member name="M:Demo.Hosts.Api.Controllers.TicketController.GetTicketsByPassengerIdAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Получить информацию о билетах по документу пассажира.
+            </summary>
+            <remarks>NOTE пример добавления индекса для поиска (+ покрывающий индекс)</remarks>
+            <param name="passengerId">Номер документа пассажира.</param>
+            <param name="cancellationToken">Токен отмены.</param>
+            <returns>Список билетов <see cref="T:Demo.Contracts.Ticket.TicketDto"/></returns>
         </member>
         <member name="M:Demo.Hosts.Api.Controllers.TicketController.GetTicketFlightsAsync(System.String,System.Threading.CancellationToken)">
             <summary>
             Получить информацию о перелётах по номеру билета.
             </summary>
+            <remarks>NOTE пример использования индекса для поиска (ticket-flights.ticket_no)</remarks>
             <param name="no">Номер билета.</param>
             <param name="cancellationToken">Токен отмены.</param>
             <returns>Список перелётов <see cref="T:Demo.Contracts.TicketFlight.TicketFlightDto"/></returns>
@@ -81,19 +131,10 @@
             </summary>
             <param name="ticketFlightService">Сервис работы с перелётами.</param>
         </member>
-        <member name="M:Demo.Hosts.Api.Controllers.TicketFlightController.GetAllAsync(System.Threading.CancellationToken,System.Int32,System.Int32)">
-            <summary>
-            TODO
-            Получить список.
-            </summary>
-            <param name="cancellationToken">Отмена операции.</param>
-            <param name="pageSize">Размер страницы.</param>
-            <param name="pageIndex">Номер страницы.</param>
-            <returns>Коллекция объявлений <see cref="T:Demo.Contracts.TicketFlight.TicketFlightDto"/></returns>
-        </member>
         <member name="M:Demo.Hosts.Api.Controllers.TicketFlightController.SearchAsync(Demo.Contracts.TicketFlight.TicketFlightFilterRequest,System.Threading.CancellationToken,System.Int32,System.Int32)">
             <summary>
             Выполнить поиск перелётов.
+            TODO нужно? automapper?
             </summary>
             <param name="filterRequest">Параметры поиска.</param>
             <param name="cancellationToken">Отмена операции.</param>

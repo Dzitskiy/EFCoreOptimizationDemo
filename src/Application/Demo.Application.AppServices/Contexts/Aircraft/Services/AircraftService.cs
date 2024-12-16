@@ -22,4 +22,16 @@ public class AircraftService : IAircraftService
     {
         return _repository.GetAircraftInfoAsync(aircraftCode, useSplitQuery, cancellationToken);
     }
+
+    /// <inheritdoc />
+    public Task<SeatDto[]> GetAircraftSeatsInfoAsync(string aircraftCode, CancellationToken cancellationToken)
+    {
+        return _repository.GetAircraftSeatsInfoAsync(aircraftCode, cancellationToken);
+    }
+
+    /// <inheritdoc />
+    public Task<SeatDto[]> GetCessnaSeatsInfoAsync(CancellationToken cancellationToken)
+    {
+        return _repository.GetCn1SeatsInfoAsync(cancellationToken);
+    }
 }

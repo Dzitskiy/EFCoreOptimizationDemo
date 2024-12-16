@@ -1,19 +1,19 @@
 ﻿namespace Demo.Contracts.Flight;
 
 /// <summary>
-/// Параметры поиска рейсов.
+/// Краткая информация о маршруте рейса.
 /// </summary>
-public class FlightFilterRequest
+public class FlightRouteDto
 {
-    /// <summary>
-    /// Код ВС.
-    /// </summary>
-    public string AircraftCode { get; set; }
-
     /// <summary>
     /// Номер рейса.
     /// </summary>
     public string FlightNo { get; set; }
+
+    /// <summary>
+    /// Запланированная дата и время вылета.
+    /// </summary>
+    public string ScheduledDeparture { get; set; }
 
     /// <summary>
     /// Аэропорт вылета.

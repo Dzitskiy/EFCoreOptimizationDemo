@@ -23,23 +23,10 @@ public class TicketFlightController : ControllerBase
     {
         _ticketFlightService = ticketFlightService;
     }
-    
-    /// <summary>
-    /// TODO
-    /// Получить список.
-    /// </summary>
-    /// <param name="cancellationToken">Отмена операции.</param>
-    /// <param name="pageSize">Размер страницы.</param>
-    /// <param name="pageIndex">Номер страницы.</param>
-    /// <returns>Коллекция объявлений <see cref="TicketFlightDto"/></returns>
-    [HttpGet("get-all-paged")]
-    public async Task<IActionResult> GetAllAsync(CancellationToken cancellationToken, int pageSize = 10, int pageIndex = 0)
-    {
-        return Ok();
-    }
 
     /// <summary>
     /// Выполнить поиск перелётов.
+    /// TODO нужно? automapper?
     /// </summary>
     /// <param name="filterRequest">Параметры поиска.</param>
     /// <param name="cancellationToken">Отмена операции.</param>

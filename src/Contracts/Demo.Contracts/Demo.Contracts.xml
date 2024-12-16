@@ -74,6 +74,94 @@
             Номер рейса.
             </summary>
         </member>
+        <member name="P:Demo.Contracts.Flight.FlightFilterRequest.DepartureAirport">
+            <summary>
+            Аэропорт вылета.
+            </summary>
+        </member>
+        <member name="P:Demo.Contracts.Flight.FlightFilterRequest.ArrivalAirport">
+            <summary>
+            Аэропорт прибытия.
+            </summary>
+        </member>
+        <member name="T:Demo.Contracts.Flight.FlightRouteDto">
+            <summary>
+            Краткая информация о маршруте рейса.
+            </summary>
+        </member>
+        <member name="P:Demo.Contracts.Flight.FlightRouteDto.FlightNo">
+            <summary>
+            Номер рейса.
+            </summary>
+        </member>
+        <member name="P:Demo.Contracts.Flight.FlightRouteDto.ScheduledDeparture">
+            <summary>
+            Запланированная дата и время вылета.
+            </summary>
+        </member>
+        <member name="P:Demo.Contracts.Flight.FlightRouteDto.DepartureAirport">
+            <summary>
+            Аэропорт вылета.
+            </summary>
+        </member>
+        <member name="P:Demo.Contracts.Flight.FlightRouteDto.ArrivalAirport">
+            <summary>
+            Аэропорт прибытия.
+            </summary>
+        </member>
+        <member name="T:Demo.Contracts.Pagination.PagedCollection`1">
+            <summary>Коллекция с поддержкой пагинации.</summary>
+            <typeparam name="T">Тип объекта.</typeparam>
+        </member>
+        <member name="F:Demo.Contracts.Pagination.PagedCollection`1.Empty">
+            <summary>
+            Пустая коллекция.
+            </summary>
+        </member>
+        <member name="M:Demo.Contracts.Pagination.PagedCollection`1.#ctor(System.Collections.Generic.IReadOnlyCollection{`0},System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Инициализирует экземпляр <see cref="T:Demo.Contracts.Pagination.PagedCollection`1"/>.
+            </summary>
+            <param name="data">Данные выбранной сраницы.</param>
+            <param name="total">Всего записей.</param>
+            <param name="pageIndex">Номер страницы.</param>
+            <param name="pageSize">Размер страницы.</param>
+        </member>
+        <member name="P:Demo.Contracts.Pagination.PagedCollection`1.Data">
+            <summary>
+            Записи на странице.
+            </summary>
+        </member>
+        <member name="P:Demo.Contracts.Pagination.PagedCollection`1.Total">
+            <summary>
+            Общее количество записей.
+            </summary>
+        </member>
+        <member name="P:Demo.Contracts.Pagination.PagedCollection`1.PageIndex">
+            <summary>
+            Номер страницы.
+            </summary>
+        </member>
+        <member name="P:Demo.Contracts.Pagination.PagedCollection`1.PageSize">
+            <summary>
+            Размер страницы.
+            </summary>
+        </member>
+        <member name="T:Demo.Contracts.Pagination.PageRequest">
+            <summary>
+            Запрос с информацией о пагинации.
+            </summary>
+        </member>
+        <member name="P:Demo.Contracts.Pagination.PageRequest.PageIndex">
+            <summary>
+            Номер страницы (начиная с 0).
+            </summary>
+        </member>
+        <member name="P:Demo.Contracts.Pagination.PageRequest.PageSize">
+            <summary>
+            Размер страницы.
+            </summary>
+        </member>
         <member name="T:Demo.Contracts.TicketFlight.TicketFlightDto">
             <summary>
             Информация о перелёте.
@@ -127,6 +215,26 @@
         <member name="P:Demo.Contracts.TicketFlight.TicketFlightShortDto.Fare">
             <summary>
             Тариф.
+            </summary>
+        </member>
+        <member name="T:Demo.Contracts.Ticket.TicketDto">
+            <summary>
+            Информация о билете.
+            </summary>
+        </member>
+        <member name="P:Demo.Contracts.Ticket.TicketDto.TicketNo">
+            <summary>
+            Номер билета.
+            </summary>
+        </member>
+        <member name="P:Demo.Contracts.Ticket.TicketDto.PassengerId">
+            <summary>
+            Идентификационные данные пассажира (номер документа)
+            </summary>
+        </member>
+        <member name="P:Demo.Contracts.Ticket.TicketDto.PassengerName">
+            <summary>
+            Полное имя пассажира.
             </summary>
         </member>
     </members>

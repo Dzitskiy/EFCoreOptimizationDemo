@@ -9,7 +9,7 @@ namespace Demo.Application.AppServices.Contexts.TicketFlight.Repositories;
 public interface ITicketFlightRepository
 {
     /// <summary>
-    /// Получить информацию о перелятах.
+    /// Получить информацию о перелётах.
     /// </summary>
     /// <param name="ticketNo">Номер билета.</param>
     /// <param name="cancellationToken">Токен отмены.</param>

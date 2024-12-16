@@ -1,6 +1,7 @@
 ﻿using Demo.Application.AppServices.Contexts.Flight.Builders;
 using Demo.Application.AppServices.Contexts.Flight.Repositories;
 using Demo.Contracts.Flight;
+using Demo.Contracts.Pagination;
 
 namespace Demo.Application.AppServices.Contexts.Flight.Services;
 
@@ -20,9 +21,28 @@ public class FlightService : IFlightService
     }
 
     /// <inheritdoc />
-    public Task<FlightDto[]> SearchAsync(FlightFilterRequest filter, CancellationToken cancellationToken)
+    public async Task<PagedCollection<FlightDto>> SearchAsync(FlightFilterRequest filter, int pageIndex, int pageSize,
+        CancellationToken cancellationToken)
     {
         var specification = _predicateBuilder.Build(filter);
-        return _repository.SearchAsync(specification, cancellationToken);
+
+        var total = await _repository.GetCountAsync(specification.PredicateExpression, cancellationToken);
+
+        if (total == 0)
+        {
+            return PagedCollection<FlightDto>.Empty;
+        }
+
+        var skip = pageIndex * pageSize;
+
+        return new PagedCollection<FlightDto>(
+            await _repository.SearchAsync(specification, skip, pageSize, cancellationToken),
+            total, pageIndex, pageSize);
+    }
+
+    /// <inheritdoc />
+    public Task<FlightRouteDto[]> GetFlightRoutesAsync(string flightNo, CancellationToken cancellationToken)
+    {
+        return _repository.GetFlightRoutesAsync(flightNo, cancellationToken);
     }
 }

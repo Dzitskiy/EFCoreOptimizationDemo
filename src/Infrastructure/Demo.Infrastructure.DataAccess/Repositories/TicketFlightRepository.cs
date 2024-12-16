@@ -35,7 +35,6 @@ public class TicketFlightRepository : ITicketFlightRepository
     /// <inheritdoc/>
     public Task<TicketFlightDto[]> GetTicketFlightsAsync(int flightId, CancellationToken cancellationToken)
     {
-        // todo as split query?
         return _dbContext.TicketFlights.Where(x => x.FlightId == flightId)
             .Select(x => new TicketFlightDto
             {
@@ -47,8 +46,10 @@ public class TicketFlightRepository : ITicketFlightRepository
     }
 
     /// <inheritdoc/>
+    [Obsolete("нужно?")]
     public Task<TicketFlightDto[]> SearchAsync(ISpecification<TicketFlight> specification, CancellationToken cancellationToken)
     {
+        // TODO нужен?
         return _dbContext.TicketFlights.Where(specification.PredicateExpression)
             .Select(x => new TicketFlightDto
             {

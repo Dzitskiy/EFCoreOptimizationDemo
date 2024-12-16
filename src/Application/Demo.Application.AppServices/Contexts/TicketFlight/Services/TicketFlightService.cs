@@ -27,7 +27,7 @@ public class TicketFlightService : ITicketFlightService
     }
 
     /// <inheritdoc />
-    public Task<TicketFlightDto[]> GetFlightsAsync(int flightId, CancellationToken cancellationToken)
+    public Task<TicketFlightDto[]> GetTicketFlightsAsync(int flightId, CancellationToken cancellationToken)
     {
         return _repository.GetTicketFlightsAsync(flightId, cancellationToken);
     }

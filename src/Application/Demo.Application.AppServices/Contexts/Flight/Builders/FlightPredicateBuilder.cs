@@ -20,6 +20,16 @@ public class FlightPredicateBuilder : IFlightPredicateBuilder
             specification = specification.AndPredicate(x => x.FlightNo == filter.FlightNo);
         }
 
+        if (!string.IsNullOrWhiteSpace(filter.DepartureAirport))
+        {
+            specification = specification.AndPredicate(x => x.DepartureAirport == filter.DepartureAirport);
+        }
+
+        if (!string.IsNullOrWhiteSpace(filter.ArrivalAirport))
+        {
+            specification = specification.AndPredicate(x => x.ArrivalAirport == filter.ArrivalAirport);
+        }
+
         return specification;
     }
 }

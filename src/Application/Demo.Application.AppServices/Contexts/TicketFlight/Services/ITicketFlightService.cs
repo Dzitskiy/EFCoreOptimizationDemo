@@ -21,7 +21,7 @@ public interface ITicketFlightService
     /// <param name="flightId">Идетификатор рейса.</param>
     /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>Список перелётов <see cref="TicketFlightDto"/></returns>
-    Task<TicketFlightDto[]> GetFlightsAsync(int flightId, CancellationToken cancellationToken);
+    Task<TicketFlightDto[]> GetTicketFlightsAsync(int flightId, CancellationToken cancellationToken);
 
     /// <summary>
     /// Получить информацию о перелётах по фильтру.
