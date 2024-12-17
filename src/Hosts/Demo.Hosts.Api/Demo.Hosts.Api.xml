@@ -102,6 +102,15 @@
             c-tor <see cref="T:Demo.Hosts.Api.Controllers.TicketFlightController"/>
             </summary>
         </member>
+        <member name="M:Demo.Hosts.Api.Controllers.TicketController.GetTicketFlightsAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Получить информацию о перелётах по номеру билета.
+            </summary>
+            <remarks>NOTE пример использования индекса для поиска (ticket-flights.ticket_no)</remarks>
+            <param name="no">Номер билета.</param>
+            <param name="cancellationToken">Токен отмены.</param>
+            <returns>Список перелётов <see cref="T:Demo.Contracts.TicketFlight.TicketFlightDto"/></returns>
+        </member>
         <member name="M:Demo.Hosts.Api.Controllers.TicketController.GetTicketsByPassengerIdAsync(System.String,System.Threading.CancellationToken)">
             <summary>
             Получить информацию о билетах по документу пассажира.
@@ -111,14 +120,25 @@
             <param name="cancellationToken">Токен отмены.</param>
             <returns>Список билетов <see cref="T:Demo.Contracts.Ticket.TicketDto"/></returns>
         </member>
-        <member name="M:Demo.Hosts.Api.Controllers.TicketController.GetTicketFlightsAsync(System.String,System.Threading.CancellationToken)">
+        <member name="M:Demo.Hosts.Api.Controllers.TicketController.GetTicketsByPassengerNameAsync(System.String,Demo.Application.AppServices.Enums.StringCompareType,System.Threading.CancellationToken)">
             <summary>
-            Получить информацию о перелётах по номеру билета.
+            Получить информацию о билетах по имени пассажира.
             </summary>
-            <remarks>NOTE пример использования индекса для поиска (ticket-flights.ticket_no)</remarks>
-            <param name="no">Номер билета.</param>
+            <remarks>NOTE пример добавления индексов: по выражению, с правилом сортировки, с классом операторов</remarks>
+            <param name="passengerName">Имя пассажира.</param>
+            <param name="compareType">Способ сравнения строк.</param>
             <param name="cancellationToken">Токен отмены.</param>
-            <returns>Список перелётов <see cref="T:Demo.Contracts.TicketFlight.TicketFlightDto"/></returns>
+            <returns>Список билетов <see cref="T:Demo.Contracts.Ticket.TicketDto"/></returns>
+        </member>
+        <member name="M:Demo.Hosts.Api.Controllers.TicketController.GetTicketsStartsPassengerNameAsync(System.String,Demo.Application.AppServices.Enums.StringCompareType,System.Threading.CancellationToken)">
+            <summary>
+            Получить информацию о билетах по начальной части имени пассажира.
+            </summary>
+            <remarks>NOTE пример добавления индексов: по выражению, с классом операторов</remarks>
+            <param name="passengerName">Начальная часть имени пассажира.</param>
+            <param name="compareType">Способ сравнения строк.</param>
+            <param name="cancellationToken">Токен отмены.</param>
+            <returns>Список билетов <see cref="T:Demo.Contracts.Ticket.TicketDto"/></returns>
         </member>
         <member name="T:Demo.Hosts.Api.Controllers.TicketFlightController">
             <summary>
