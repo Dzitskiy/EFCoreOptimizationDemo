@@ -19,7 +19,7 @@ services:
     restart: always
     environment: # configure postgres 
         - POSTGRES_USER=postgres
-        - POSTGRES_DB=Advertisement
+        - POSTGRES_DB=DemoDB
         - POSTGRES_PASSWORD=password
     ports: 
         - "5432:5432"
