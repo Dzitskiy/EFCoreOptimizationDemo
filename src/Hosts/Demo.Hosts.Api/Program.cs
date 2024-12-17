@@ -1,5 +1,6 @@
 using Demo.Application.AppServices.Interceptors;
 using Demo.Infrastructure.ComponentRegistrar;
+using Demo.Infrastructure.ComponentRegistrar.MapProfiles;
 using Demo.Infrastructure.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
@@ -21,6 +22,8 @@ builder.Services.AddDbContext<ReadOnlyDemoDbContext>((sp, options) =>
 });
 
 builder.Services.AddServices();
+
+builder.Services.AddAutoMapper(typeof(TicketProfile).Assembly);
 
 var app = builder.Build();
 

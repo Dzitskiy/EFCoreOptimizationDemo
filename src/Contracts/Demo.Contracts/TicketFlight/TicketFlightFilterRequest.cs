@@ -13,8 +13,6 @@ public class TicketFlightFilterRequest
     /// <summary>
     /// Тариф.
     /// </summary>
-    [Obsolete("?")]
-    // todo если использовать в примере: покрывающий индекс? регнез поиск? или убрать вообще?
     public string Fare { get; set; }
 
     /// <summary>

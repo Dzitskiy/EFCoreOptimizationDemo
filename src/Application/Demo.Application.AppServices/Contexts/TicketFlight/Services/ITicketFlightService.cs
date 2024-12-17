@@ -1,3 +1,4 @@
+using Demo.Contracts.Pagination;
 using Demo.Contracts.TicketFlight;
 
 namespace Demo.Application.AppServices.Contexts.TicketFlight.Services;
@@ -27,7 +28,10 @@ public interface ITicketFlightService
     /// Получить информацию о перелётах по фильтру.
     /// </summary>
     /// <param name="filter">Параметры поиска перелётов.</param>
+    /// <param name="pageIndex">Номер страницы.</param>
+    /// <param name="pageSize">Размер страницы.</param>
     /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>Список перелётов <see cref="TicketFlightDto"/></returns>
-    Task<TicketFlightDto[]> SearchAsync(TicketFlightFilterRequest filter, CancellationToken cancellationToken);
+    Task<PagedCollection<TicketFlightDto>> SearchAsync(TicketFlightFilterRequest filter, int pageIndex, int pageSize,
+        CancellationToken cancellationToken);
 }

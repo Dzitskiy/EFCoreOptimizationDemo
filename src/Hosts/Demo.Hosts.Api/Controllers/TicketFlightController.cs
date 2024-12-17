@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using Demo.Application.AppServices.Contexts.TicketFlight.Services;
+using Demo.Contracts.Pagination;
 using Demo.Contracts.TicketFlight;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,18 +27,17 @@ public class TicketFlightController : ControllerBase
 
     /// <summary>
     /// Выполнить поиск перелётов.
-    /// TODO нужно? automapper?
     /// </summary>
     /// <param name="filterRequest">Параметры поиска.</param>
+    /// <param name="pageRequest">Информация о пагинации.</param>
     /// <param name="cancellationToken">Отмена операции.</param>
-    /// <param name="pageSize">Размер страницы.</param>
-    /// <param name="pageIndex">Номер страницы.</param>
     /// <returns>Коллекция перелётов <see cref="TicketFlightDto"/></returns>
     [HttpGet("search")]
     public async Task<IActionResult> SearchAsync([FromQuery] TicketFlightFilterRequest filterRequest,
-        CancellationToken cancellationToken, int pageSize = 20, int pageIndex = 0)
+        [FromQuery] PageRequest pageRequest, CancellationToken cancellationToken)
     {
-        var result = await _ticketFlightService.SearchAsync(filterRequest, cancellationToken);
+        var result = await _ticketFlightService.SearchAsync(filterRequest,
+            pageRequest.PageIndex, pageRequest.PageSize, cancellationToken);
         return Ok(result);
     }
 }

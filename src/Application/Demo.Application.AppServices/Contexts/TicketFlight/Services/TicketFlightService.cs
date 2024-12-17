@@ -1,5 +1,6 @@
 using Demo.Application.AppServices.Contexts.TicketFlight.Builders;
 using Demo.Application.AppServices.Contexts.TicketFlight.Repositories;
+using Demo.Contracts.Pagination;
 using Demo.Contracts.TicketFlight;
 
 namespace Demo.Application.AppServices.Contexts.TicketFlight.Services;
@@ -33,9 +34,22 @@ public class TicketFlightService : ITicketFlightService
     }
 
     /// <inheritdoc />
-    public Task<TicketFlightDto[]> SearchAsync(TicketFlightFilterRequest filter, CancellationToken cancellationToken)
+    public async Task<PagedCollection<TicketFlightDto>> SearchAsync(TicketFlightFilterRequest filter,
+        int pageIndex, int pageSize, CancellationToken cancellationToken)
     {
         var specification = _predicateBuilder.Build(filter);
-        return _repository.SearchAsync(specification, cancellationToken);
+
+        var total = await _repository.GetCountAsync(specification.PredicateExpression, cancellationToken);
+
+        if (total == 0)
+        {
+            return PagedCollection<TicketFlightDto>.Empty;
+        }
+
+        var skip = pageIndex * pageSize;
+
+        return new PagedCollection<TicketFlightDto>(
+            await _repository.SearchAsync(specification, skip, pageSize, cancellationToken),
+            total, pageIndex, pageSize);
     }
 }

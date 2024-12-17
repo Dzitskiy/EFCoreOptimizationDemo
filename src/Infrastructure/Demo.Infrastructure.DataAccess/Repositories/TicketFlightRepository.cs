@@ -3,6 +3,7 @@ using Demo.Application.AppServices.Specifications;
 using Demo.Contracts.TicketFlight;
 using Demo.Domain;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Demo.Infrastructure.DataAccess.Repositories;
 
@@ -36,6 +37,7 @@ public class TicketFlightRepository : ITicketFlightRepository
     public Task<TicketFlightDto[]> GetTicketFlightsAsync(int flightId, CancellationToken cancellationToken)
     {
         return _dbContext.TicketFlights.Where(x => x.FlightId == flightId)
+            .TagWith("Получить список перелётов по идентификатору рейса.")
             .Select(x => new TicketFlightDto
             {
                 FlightNo = x.Flight.FlightNo,
@@ -46,11 +48,14 @@ public class TicketFlightRepository : ITicketFlightRepository
     }
 
     /// <inheritdoc/>
-    [Obsolete("нужно?")]
-    public Task<TicketFlightDto[]> SearchAsync(ISpecification<TicketFlight> specification, CancellationToken cancellationToken)
+    public Task<TicketFlightDto[]> SearchAsync(ISpecification<TicketFlight> specification,
+        int skip, int take, CancellationToken cancellationToken)
     {
-        // TODO нужен?
+        // NOTE сравнить с FlightRepository.SearchAsync
         return _dbContext.TicketFlights.Where(specification.PredicateExpression)
+            .TagWith("Поиск перелётов по фильтру.")
+            .OrderBy(x => x.FlightId)
+            .Skip(skip).Take(take)
             .Select(x => new TicketFlightDto
             {
                 FlightNo = x.Flight.FlightNo,
@@ -58,5 +63,14 @@ public class TicketFlightRepository : ITicketFlightRepository
                 PassengerName = x.TicketNoNavigation.PassengerName
             })
             .ToArrayAsync(cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public Task<int> GetCountAsync(Expression<Func<TicketFlight, bool>> expression,
+        CancellationToken cancellationToken)
+    {
+        return _dbContext.TicketFlights
+            .TagWith("Получить количество перелётов.")
+            .CountAsync(expression, cancellationToken);
     }
 }

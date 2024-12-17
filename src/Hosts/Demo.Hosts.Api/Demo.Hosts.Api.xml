@@ -151,15 +151,13 @@
             </summary>
             <param name="ticketFlightService">Сервис работы с перелётами.</param>
         </member>
-        <member name="M:Demo.Hosts.Api.Controllers.TicketFlightController.SearchAsync(Demo.Contracts.TicketFlight.TicketFlightFilterRequest,System.Threading.CancellationToken,System.Int32,System.Int32)">
+        <member name="M:Demo.Hosts.Api.Controllers.TicketFlightController.SearchAsync(Demo.Contracts.TicketFlight.TicketFlightFilterRequest,Demo.Contracts.Pagination.PageRequest,System.Threading.CancellationToken)">
             <summary>
             Выполнить поиск перелётов.
-            TODO нужно? automapper?
             </summary>
             <param name="filterRequest">Параметры поиска.</param>
+            <param name="pageRequest">Информация о пагинации.</param>
             <param name="cancellationToken">Отмена операции.</param>
-            <param name="pageSize">Размер страницы.</param>
-            <param name="pageIndex">Номер страницы.</param>
             <returns>Коллекция перелётов <see cref="T:Demo.Contracts.TicketFlight.TicketFlightDto"/></returns>
         </member>
     </members>
