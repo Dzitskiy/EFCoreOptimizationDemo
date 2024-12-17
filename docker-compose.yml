@@ -6,10 +6,11 @@ services:
     build:
       context: .
       dockerfile: src/Hosts/Demo.Hosts.Api/Dockerfile
+    restart: always
     ports:
       - 5000:8080
     environment:
-      - ConnectionStrings__PostgresDb=Server=postgres;Database=Advertisement;Username=postgres;Password=password;Port=5432
+      - ConnectionStrings__PostgresDb=Server=postgres;Database=DemoDB;Username=postgres;Password=password;Port=5432
     depends_on:
       - postgres
 
