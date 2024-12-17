@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+
+  demoapi:
+    build:
+      context: .
+    build:
+      context: .
+      dockerfile: src/Hosts/Demo.Hosts.Api/Dockerfile
+    ports:
+      - 6000:8080
+    environment:
+      - ConnectionStrings__PostgresDb=Server=postgres;Database=Advertisement;Username=postgres;Password=password;Port=5432
+    depends_on:
+      - postgres
+
+  postgres:
+    image: "postgres" # use latest official postgres version
+    restart: always
+    environment: # configure postgres 
+        - POSTGRES_USER=postgres
+        - POSTGRES_DB=Advertisement
+        - POSTGRES_PASSWORD=password
+    ports: 
+        - "5432:5432"
+    volumes: # persist data even if container shuts down
+        - postgres_data:/var/lib/postgresql/data/
+
+  adminer:
+    image: adminer
+    ports:
+      - 8080:8080
+
+volumes: # named volumes can be managed easier using docker-compose
+  postgres_data:
