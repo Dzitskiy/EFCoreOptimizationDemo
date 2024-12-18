@@ -10,7 +10,7 @@ services:
     ports:
       - 5000:8080
     environment:
-      - ConnectionStrings__PostgresDb=Server=postgres;Database=DemoDB;Username=postgres;Password=password;Port=5432
+      - ConnectionStrings__PostgresDb=Server=postgres;Database=demo;Username=postgres;Password=password;Port=5432
     depends_on:
       - postgres
 
@@ -26,10 +26,10 @@ services:
     volumes: # persist data even if container shuts down
         - postgres_data:/var/lib/postgresql/data/
 
-  # adminer:
-    # image: adminer
-    # ports:
-      # - 8080:8080
+  adminer:
+    image: adminer
+    ports:
+      - 8080:8080
 
 volumes: # named volumes can be managed easier using docker-compose
   postgres_data:
