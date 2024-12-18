@@ -24,6 +24,7 @@ public class TicketFlightRepository : ITicketFlightRepository
     public Task<TicketFlightDto[]> GetTicketFlightsAsync(string ticketNo, CancellationToken cancellationToken)
     {
         return _dbContext.TicketFlights.Where(x => x.TicketNo == ticketNo)
+            .TagWith($"Получить список перелётов по номеру билета {ticketNo}")
             .Select(x => new TicketFlightDto
             {
                 FlightNo = x.Flight.FlightNo,
@@ -37,7 +38,7 @@ public class TicketFlightRepository : ITicketFlightRepository
     public Task<TicketFlightDto[]> GetTicketFlightsAsync(int flightId, CancellationToken cancellationToken)
     {
         return _dbContext.TicketFlights.Where(x => x.FlightId == flightId)
-            .TagWith("Получить список перелётов по идентификатору рейса.")
+            .TagWith($"Получить список перелётов по идентификатору рейса {flightId}")
             .Select(x => new TicketFlightDto
             {
                 FlightNo = x.Flight.FlightNo,
@@ -54,7 +55,7 @@ public class TicketFlightRepository : ITicketFlightRepository
         // NOTE сравнить с FlightRepository.SearchAsync
         return _dbContext.TicketFlights.Where(specification.PredicateExpression)
             .TagWith("Поиск перелётов по фильтру.")
-            .OrderBy(x => x.FlightId)
+            .OrderBy(x => x.TicketNo).ThenBy(x => x.FlightId)
             .Skip(skip).Take(take)
             .Select(x => new TicketFlightDto
             {
@@ -70,7 +71,7 @@ public class TicketFlightRepository : ITicketFlightRepository
         CancellationToken cancellationToken)
     {
         return _dbContext.TicketFlights
-            .TagWith("Получить количество перелётов.")
+            .TagWith("Получить количество перелётов по фильтру.")
             .CountAsync(expression, cancellationToken);
     }
 }

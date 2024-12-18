@@ -54,6 +54,7 @@ public class FlightRepository : IFlightRepository
         // NOTE покрывающий индекс
         // NOTE CREATE INDEX flights_flight_no_route ON bookings.flights USING btree (flight_no) include (departure_airport, scheduled_departure, arrival_airport);
         return _dbContext.Flights.Where(x => x.FlightNo == flightNo)
+            .TagWith($"Получить список маршрутов по номеру рейса {flightNo}")
             .Select(x => new FlightRouteDto
             {
                 FlightNo = x.FlightNo,
@@ -69,7 +70,7 @@ public class FlightRepository : IFlightRepository
         CancellationToken cancellationToken)
     {
         return _dbContext.Flights
-            .TagWith("Получить количество рейсов.")
+            .TagWith("Получить количество рейсов по фильтру.")
             .CountAsync(expression, cancellationToken);
     }
 }

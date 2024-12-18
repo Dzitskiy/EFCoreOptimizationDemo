@@ -29,6 +29,7 @@ public class TicketRepository : ITicketRepository
         // NOTE а ещё лучше - покрывающий индекс
         // CREATE INDEX tickets_passenger_id ON bookings.tickets USING btree(passenger_id) INCLUDE(ticket_no, passenger_name);
         return _dbContext.Tickets.Where(x => x.PassengerId == passengerId)
+            .TagWith($"Получить список билетов по документу {passengerId}")
             .ProjectTo<TicketDto>(_mapper.ConfigurationProvider)
             // NOTE Equals to:
             // .Select(x => new TicketDto
@@ -44,6 +45,7 @@ public class TicketRepository : ITicketRepository
     public Task<TicketDto[]> GetByPassengerNameAsync(string passengerName, CancellationToken cancellationToken)
     {
         return _dbContext.Tickets.Where(x => x.PassengerName == passengerName)
+            .TagWith($"Получить список билетов по имени пассажира {passengerName}")
             .ProjectTo<TicketDto>(_mapper.ConfigurationProvider)
             .ToArrayAsync(cancellationToken);
     }
@@ -52,6 +54,7 @@ public class TicketRepository : ITicketRepository
     public Task<TicketDto[]> GetByPassengerNameLowerAsync(string passengerName, CancellationToken cancellationToken)
     {
         return _dbContext.Tickets.Where(x => x.PassengerName.ToLower() == passengerName.ToLower())
+            .TagWith($"Получить список билетов по имени пассажира lower {passengerName}")
             .ProjectTo<TicketDto>(_mapper.ConfigurationProvider)
             .ToArrayAsync(cancellationToken);
     }
@@ -60,6 +63,7 @@ public class TicketRepository : ITicketRepository
     public Task<TicketDto[]> GetByPassengerNameILikeAsync(string passengerName, CancellationToken cancellationToken)
     {
         return _dbContext.Tickets.Where(x => EF.Functions.ILike(x.PassengerName, passengerName))
+            .TagWith($"Получить список билетов по имени пассажира ILike {passengerName}")
             .ProjectTo<TicketDto>(_mapper.ConfigurationProvider)
             .ToArrayAsync(cancellationToken);
     }
@@ -69,6 +73,7 @@ public class TicketRepository : ITicketRepository
     {
         return _dbContext.Tickets.Where(x =>
                 EF.Functions.Collate(x.PassengerName, "case_insensitive") == passengerName)
+            .TagWith($"Получить список билетов по имени пассажира collate {passengerName}")
             .ProjectTo<TicketDto>(_mapper.ConfigurationProvider)
             .ToArrayAsync(cancellationToken);
     }
@@ -76,6 +81,7 @@ public class TicketRepository : ITicketRepository
     public Task<TicketDto[]> GetStartsPassengerNameAsync(string passengerName, CancellationToken cancellationToken)
     {
         return _dbContext.Tickets.Where(x => x.PassengerName.StartsWith(passengerName))
+            .TagWith($"Получить список билетов по началу имени пассажира {passengerName}")
             .ProjectTo<TicketDto>(_mapper.ConfigurationProvider)
             .ToArrayAsync(cancellationToken);
     }
@@ -83,6 +89,7 @@ public class TicketRepository : ITicketRepository
     public Task<TicketDto[]> GetStartsPassengerNameLowerAsync(string passengerName, CancellationToken cancellationToken)
     {
         return _dbContext.Tickets.Where(x => x.PassengerName.ToLower().StartsWith(passengerName.ToLower()))
+            .TagWith($"Получить список билетов по началу имени пассажира lower {passengerName}")
             .ProjectTo<TicketDto>(_mapper.ConfigurationProvider)
             .ToArrayAsync(cancellationToken);
     }
@@ -90,6 +97,7 @@ public class TicketRepository : ITicketRepository
     public Task<TicketDto[]> GetStartsPassengerNameILikeAsync(string passengerName, CancellationToken cancellationToken)
     {
         return _dbContext.Tickets.Where(x => EF.Functions.ILike(x.PassengerName, $"{passengerName}%"))
+            .TagWith($"Получить список билетов по началу имени пассажира like {passengerName}")
             .ProjectTo<TicketDto>(_mapper.ConfigurationProvider)
             .ToArrayAsync(cancellationToken);
     }
