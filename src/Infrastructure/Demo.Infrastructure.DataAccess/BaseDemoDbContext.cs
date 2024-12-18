@@ -49,7 +49,7 @@ namespace Demo.Infrastructure.DataAccess
         {
             modelBuilder.HasDefaultSchema(Schema);
 
-            // TODO ?
+            // NOTE хорошая практика - выносить конфигурацию каждой сущности в отдельный файл
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly(),
                 t => t.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IEntityTypeConfiguration<>)));
 

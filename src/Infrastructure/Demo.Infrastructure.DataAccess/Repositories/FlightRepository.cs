@@ -25,9 +25,8 @@ public class FlightRepository : IFlightRepository
     public async Task<FlightDto[]> SearchAsync(ISpecification<Flight> specification,
         int skip, int take, CancellationToken cancellationToken)
     {
-        // TODO сделать 2 варианта: поиск сразу и поиск сначала Ids, потом выборка
-
         // NOTE поиск по Id, затем выборка по Id
+        // NOTE сравнить с TicketFlightRepository.SearchAsync
         var ids = await _dbContext.Flights.Where(specification.PredicateExpression)
             .TagWith("Поиск идентификаторов рейсов по фильтру.")
             .OrderBy(x => x.FlightId)
@@ -55,6 +54,7 @@ public class FlightRepository : IFlightRepository
         // NOTE покрывающий индекс
         // NOTE CREATE INDEX flights_flight_no_route ON bookings.flights USING btree (flight_no) include (departure_airport, scheduled_departure, arrival_airport);
         return _dbContext.Flights.Where(x => x.FlightNo == flightNo)
+            .TagWith($"Получить список маршрутов по номеру рейса {flightNo}")
             .Select(x => new FlightRouteDto
             {
                 FlightNo = x.FlightNo,
@@ -69,6 +69,8 @@ public class FlightRepository : IFlightRepository
     public Task<int> GetCountAsync(Expression<Func<Flight, bool>> expression,
         CancellationToken cancellationToken)
     {
-        return _dbContext.Flights.CountAsync(expression, cancellationToken);
+        return _dbContext.Flights
+            .TagWith("Получить количество рейсов по фильтру.")
+            .CountAsync(expression, cancellationToken);
     }
 }

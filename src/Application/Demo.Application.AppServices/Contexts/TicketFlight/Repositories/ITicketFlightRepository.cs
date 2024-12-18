@@ -1,5 +1,6 @@
 using Demo.Application.AppServices.Specifications;
 using Demo.Contracts.TicketFlight;
+using System.Linq.Expressions;
 
 namespace Demo.Application.AppServices.Contexts.TicketFlight.Repositories;
 
@@ -28,7 +29,19 @@ public interface ITicketFlightRepository
     /// Выполнить поиск перелётов.
     /// </summary>
     /// <param name="specification">Спецификация.</param>
+    /// <param name="skip">Смещение.</param>
+    /// <param name="take">Размер выборки.</param>
     /// <param name="cancellationToken">Токен отмены.</param>
     /// <returns>Список перелётов <see cref="TicketFlightDto"/></returns>
-    Task<TicketFlightDto[]> SearchAsync(ISpecification<Domain.TicketFlight> specification, CancellationToken cancellationToken);
+    Task<TicketFlightDto[]> SearchAsync(ISpecification<Domain.TicketFlight> specification,
+        int skip, int take, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Получить количество записей по условию.
+    /// </summary>
+    /// <param name="expression">Условие.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <returns>Количество записей.</returns>
+    Task<int> GetCountAsync(Expression<Func<Domain.TicketFlight, bool>> expression,
+        CancellationToken cancellationToken);
 }
